@@ -1,0 +1,1 @@
+console.log('Serve JS is called!');
