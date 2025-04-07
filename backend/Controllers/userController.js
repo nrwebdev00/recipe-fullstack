@@ -27,6 +27,9 @@ const registerUser = asyncHandler(async (req,res) =>{
             _id: user._id,
             userName: user.userName,
             email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            isStaff: user.isStaff,
             isAdmin: user.isAdmin,
             token: generateToken(user._id),
         })
@@ -34,7 +37,56 @@ const registerUser = asyncHandler(async (req,res) =>{
         res.status(400)
         throw new Error('Invalid user Data')
     }
+});
+
+// @desc Login and Get JWT 
+// @route POST /api/users/login
+// @access PUBLIC
+const loginUser = asyncHandler(async(req,res) =>{
+    const { userName, password} = req.body;
+    const user = await User.findOne({ userName });
+    if(user && await user.matchPassword(password)){
+        res.status(200).json({
+            _id:user._id,
+            userName: user.userName,
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            isStaff: user.isStaff,
+            isAdmin: user.isAdmin,
+            token: generateToken(user._id),
+        });
+    } else {
+        res.status(401)
+        throw new Error('Invaild user Name or Password');
+    }
+});
+
+// @desc Get User Profile 
+// @route GET /api/users
+// @access PRIVATE - login
+const userProfile = asyncHandler(async(req,res) =>{
+    const user = await User.findById(req.user._id);
+    if(user){
+        res.status(200).json({
+            _id: user._id,
+            userName: user.userName,
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            isStaff: user.isStaff,
+            isAdmin : user.isAdmin
+        })
+    } else {
+        res.status(404);
+        throw new Error('User Not Found');
+    }
 })
 
+// @desc Delete User 
+// @route DELETE /api/user/:id
+// @access PRIVATE - admin only
 
-export {registerUser}
+
+
+export {registerUser, loginUser, userProfile}
