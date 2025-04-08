@@ -8,9 +8,11 @@ import dotenv from 'dotenv';
 import db from './Config/db.js';
 
 // Middleware Imports
+import errorHandler from './Middleware/errorHandler.js';
 
 // Routes Imports
 import userRoutes from './Routes/userRoutes.js';
+import userAdminRoutes from './Routes/userAdminRoutes.js';
 
 dotenv.config();
 db();
@@ -29,6 +31,7 @@ app.use(bodyParser.urlencoded({
 
 // Mount Routes
 app.use('/api/users', userRoutes);
+app.use('/api/users-admin/', userAdminRoutes);
 
 // Config Routes
 app.get('/', (req,res) =>{
@@ -38,6 +41,7 @@ app.get('/', (req,res) =>{
 // Static Files
 
 // Error Middleware
+app.use(errorHandler);
 
 // Server Listen
 const PORT = process.env.PORT || 5000;
