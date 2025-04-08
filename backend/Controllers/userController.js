@@ -10,9 +10,9 @@ import ErrorResponse from '../Utlis/errorResponse.js';
 const registerUser = asyncHandler(async (req,res,next) =>{
     const { firstName, lastName, userName, email, password} = req.body;
     
-    const userExists = await User.findOne({ userName })
-    if(userExists){
-        next(new ErrorResponse('User Aldready Exists.', 400));
+    const userNameExists = await User.findOne({ userName })
+    if(userNameExists){
+        next(new ErrorResponse('User Name Aldready Exists.', 400));
     }
 
     const emailExists = await User.findOne({ email })
@@ -120,9 +120,5 @@ const upadteUser = asyncHandler(async(req,res,next)=>{
         next(new ErrorResponse('User Not Found', 400));
     }
 });
-
-
-
-
 
 export {registerUser, loginUser, userProfile, upadteUser}
