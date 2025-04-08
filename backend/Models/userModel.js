@@ -24,7 +24,8 @@ const userSchema = mongoose.Schema(
         },
         password:{
             type:String,
-            required: true
+            required: true,
+            select: false
         },
         isStaff:{
             type: Boolean,
@@ -36,6 +37,13 @@ const userSchema = mongoose.Schema(
             required: true,
             default: false
         },
+        profilePictureURL:{
+            type:String,
+            required: true,
+            default:process.env.DEFAULT_USER_IMAGE
+        },
+        resetPasswordToken: String,
+        resetPasswordExpire: Date,
     },
     {
         timestamps: true,

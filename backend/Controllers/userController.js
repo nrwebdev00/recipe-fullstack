@@ -22,17 +22,7 @@ const registerUser = asyncHandler(async (req,res,next) =>{
 
     const user = await User.create({ firstName, lastName, userName, email, password })
     if(user){
-        res.status(200).json({
-            success:true,
-            _id: user._id,
-            userName: user.userName,
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            isStaff: user.isStaff,
-            isAdmin: user.isAdmin,
-            token: generateToken(user._id),
-        })
+        sendTokenResponse(user,200,res);
     } else {
         next(new ErrorResponse('Invalid user data', 400))
     }
@@ -45,17 +35,7 @@ const loginUser = asyncHandler(async(req,res,next) =>{
     const { userName, password} = req.body;
     const user = await User.findOne({ userName });
     if(user && await user.matchPassword(password)){
-        res.status(200).json({
-            success:true,
-            _id:user._id,
-            userName: user.userName,
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            isStaff: user.isStaff,
-            isAdmin: user.isAdmin,
-            token: generateToken(user._id),
-        });
+        sendTokenResponse(user,200,res);
     } else {
         next(new ErrorResponse('Ivalid Username or Password', 403))
     }
@@ -69,13 +49,7 @@ const userProfile = asyncHandler(async(req,res) =>{
     if(user){
         res.status(200).json({
             success: true,
-            _id: user._id,
-            userName: user.userName,
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            isStaff: user.isStaff,
-            isAdmin : user.isAdmin
+            user,
         })
     } else {
         next(new ErrorResponse('User not found', 401));
@@ -105,20 +79,31 @@ const upadteUser = asyncHandler(async(req,res,next)=>{
         }
 
         const updateduser = await user.save()
-        res.status(200).json({
-            success:true,
-            _id: user._id,
-            firstName: user.firstName,
-            lastName : user.lastName,
-            userName: user.userName,
-            email: user.email,
-            isAdmin: user.isAdmin,
-            isStaff: user.isStaff,
-            tokoen: generateToken(upadteUser._id)
-        })
+        sendTokenResponse(upadteUser,200,res);
     } else {
         next(new ErrorResponse('User Not Found', 400));
     }
 });
+
+const sendTokenResponse = (user, statusCode, res) =>{
+    const token = generateToken(user._id);
+
+    const options = {
+        expires: new Date(
+            Date.now() + process.env.JWT_COOKIE_EXPIRES *24*60*60*1000,
+        ),
+        httpOnly: true
+    };
+
+    if(process.env.NODE_ENV === 'production'){
+        options.secure = true;
+    }
+
+    res.status(statusCode).cookie('token',token,options).json({
+        success:true,
+        user,
+        token
+    })
+}
 
 export {registerUser, loginUser, userProfile, upadteUser}

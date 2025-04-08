@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import colors from 'colors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 
 // Config Imports
 import db from './Config/db.js';
@@ -28,6 +29,9 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+
+// Middleware
+app.use(cookieParser());
 
 // Mount Routes
 app.use('/api/users', userRoutes);
