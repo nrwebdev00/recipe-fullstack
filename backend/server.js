@@ -4,6 +4,7 @@ import colors from 'colors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
+import cloudinary from 'cloudinary';
 
 // Config Imports
 import db from './Config/db.js';
@@ -18,6 +19,13 @@ import userAdminRoutes from './Routes/userAdminRoutes.js';
 dotenv.config();
 db();
 const app = express();
+
+// Config Cloudinary for file storage
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secert: process.env.CLOUDINARY_API_SECRET
+});
 
 // Logging Setup
 if(process.env.NODE_ENV==="development"){

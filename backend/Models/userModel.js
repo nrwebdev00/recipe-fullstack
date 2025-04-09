@@ -44,6 +44,17 @@ const userSchema = mongoose.Schema(
         resetPasswordExpire:{
             type:Date
         },
+        confirmEmailToken:{
+            type: String
+        },
+        confirmEmailExprie:{
+            type: String
+        },
+        isEmailConfirmed:{
+            type: Boolean,
+            required:true,
+            default: false
+        },
         profilePictureURL:{
             type:String,
             required: true,

@@ -12,22 +12,69 @@ import sendEmail from '../Utlis/sendEmail.js';
 const registerUser = asyncHandler(async (req,res,next) =>{
     const { firstName, lastName, userName, email, password} = req.body;
     
+    // Checks if Email and Username Already Exists
     const userNameExists = await User.findOne({ userName })
     if(userNameExists){
         next(new ErrorResponse('User Name Aldready Exists.', 400));
     }
-
     const emailExists = await User.findOne({ email })
     if(emailExists){
         next(new ErrorResponse('Email is in use already.', 400))
     }
 
+    // Create User
     const user = await User.create({ firstName, lastName, userName, email, password })
     if(user){
+        // Create Confirm Email Token and Send Email
+        const resetToken = crypto.randomBytes(20).toString('hex');
+        const hashedResetToken = crypto
+            .createHash('sha256')
+            .update(resetToken)
+            .digest('hex');
+        const TokenExpireDate = Date.now() + 10*60*1000;
+        user.confirmEmailToken = hashedResetToken;
+        user.confirmEmailExprie = TokenExpireDate;
+        // Send Email
+        const resetURL = `${req.protocol}://${req.get('host')}/api/users/forgotpassword/${resetToken}`;
+        const message = `Please confirm email address, by sending a PUT request to ${resetURL}, Thank you`;
+        try{
+            await sendEmail({
+                email: user.email,
+                subject: 'Confirm Email From Recipe Site.',
+                message
+            });
+        }catch(err){
+            console.error(err);
+            user.resetPasswordToken = undefined;
+            user.resetPasswordExpire = undefined;
+            await user.save({ validateBeforeSave: false })
+            return next(new ErrorResponse('Email could not be sent', 500))
+        }
         sendTokenResponse(user,200,res);
     } else {
         next(new ErrorResponse('Invalid user data', 400))
     }
+});
+
+// @desc Confrim Email Address
+// @route PUT api/users/confirmEmail
+// @access PRIVATE - login
+const confirmEmailAddress=asyncHandler(async(req,res,next)=>{
+    const token = crypto
+        .createHash('sha256')
+        .update(req.params.token)
+        .digest('hex');
+    
+    const user = await User.findById(req.user._id);
+
+    // Check if user was found if not send err
+    if(!user){
+        return next(new ErrorResponse('Invalid Token', 400));
+    }
+    user.isEmailConfirmed = true
+    await user.save();
+
+    sendTokenResponse(user,200,res);
 });
 
 // @desc Login and Get JWT 
@@ -41,6 +88,21 @@ const loginUser = asyncHandler(async(req,res,next) =>{
     } else {
         next(new ErrorResponse('Ivalid Username or Password', 403))
     }
+});
+
+// @desc Logout User
+// @route GET /api/users/logout
+// @access PUBLIC
+const logoutUser = asyncHandler(async(req,res,next) =>{
+    res.cookie('token','none', {
+        expires: new Date(Date.now() + 10 *1000),
+        httpOnly: true,
+    });
+
+    res.status(200).json({
+        success: true,
+        data:{}
+    })
 });
 
 // @desc Get User Profile 
@@ -168,13 +230,12 @@ const resetPassword = asyncHandler(async(req,res,next)=>{
     user.resetPasswordToken = undefined
     user.resetPasswordExpire = undefined
     await user.save();
-    user.select("-password")
 
     sendTokenResponse(user=user,200,res);
     
 });
 
-const sendTokenResponse = (user, statusCode, res) =>{
+const sendTokenResponse = (user, statusCode, res, data={}) =>{
     const token = generateToken(user._id);
 
     const options = {
@@ -190,9 +251,19 @@ const sendTokenResponse = (user, statusCode, res) =>{
 
     res.status(statusCode).cookie('token',token,options).json({
         success:true,
+        data,
         user,
         token
     })
 }
 
-export {registerUser, loginUser, userProfile, upadteUser, forgotpassword, resetPassword}
+export {
+    registerUser, 
+    loginUser, 
+    logoutUser, 
+    userProfile, 
+    upadteUser, 
+    forgotpassword, 
+    resetPassword,
+    confirmEmailAddress
+}
