@@ -9,6 +9,7 @@ dotenv.config({path: './seeder.env'});
 
 // Load Models
 import User from './Models/userModel.js';
+import { dirname } from 'path';
 
 
 // Connect To DB
@@ -18,7 +19,7 @@ db();
 
 // Read JSON file
 const users = JSON.parse(
-    
+    fs.readFileSync(`./Config/userSeeder.json`, 'utf-8')
 );
 
 // Import to DB

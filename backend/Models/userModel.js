@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
@@ -37,13 +38,17 @@ const userSchema = mongoose.Schema(
             required: true,
             default: false
         },
+        resetPasswordToken:{
+            type:String
+        },
+        resetPasswordExpire:{
+            type:Date
+        },
         profilePictureURL:{
             type:String,
             required: true,
-            default:process.env.DEFAULT_USER_IMAGE
+            default:'https://res.cloudinary.com/dnrlolvnu/image/upload/v1744132604/default_user_eut07j.jpg'
         },
-        resetPasswordToken: String,
-        resetPasswordExpire: Date,
     },
     {
         timestamps: true,
@@ -62,6 +67,18 @@ userSchema.pre('save', async function(next){
     const salt = await bcrypt.genSalt(10)
     this.password = await bcrypt.hash(this.password, salt)
 });
+
+// Generate and hash password Token
+userSchema.methods.getResetPasswordToken = function(){
+    const resetToken = crypto.randomBytes(20).toString('hex');
+
+    // Hash toke and set resetPasswordToken field
+    this.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+    this.resetPasswordExpire = Date.now() + 10 *60*1000;
+    return resetToken;
+
+}
 
 const User = mongoose.model('User', userSchema);
 export default User;
