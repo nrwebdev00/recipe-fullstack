@@ -7,7 +7,8 @@ import {
     forgotpassword, 
     resetPassword, 
     logoutUser, 
-    confirmEmailAddress
+    confirmEmailAddress,
+    profileImageUpload
 } from '../Controllers/userController.js';
 import { admin, protect, staff } from '../Middleware/authMiddleware.js';
 
@@ -23,5 +24,6 @@ router.route('/logout').get(logoutUser);
 router.route('/forgotpassword').post(forgotpassword);
 router.route('/forgotpassword/:token').put(resetPassword);
 router.route('/confirmEmail/:token').put(protect, confirmEmailAddress);
+router.route('/uploadProfileImage').put(protect, profileImageUpload);
 
 export default router;

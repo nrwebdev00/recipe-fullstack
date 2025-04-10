@@ -235,6 +235,20 @@ const resetPassword = asyncHandler(async(req,res,next)=>{
     
 });
 
+// @desc Upload Image for porfile Image
+// @route PUT /api/users/profileImageUpload
+// @access PRIVATE - login
+const profileImageUpload = asyncHandler(async(req,res,next)=>{
+    console.log(req.files);
+    console.log(req.file);
+
+    res.status(200).json({
+        success: true,
+        data: req.files,
+        data2: req.file
+    })
+});
+
 const sendTokenResponse = (user, statusCode, res, data={}) =>{
     const token = generateToken(user._id);
 
@@ -265,5 +279,6 @@ export {
     upadteUser, 
     forgotpassword, 
     resetPassword,
-    confirmEmailAddress
+    confirmEmailAddress,
+    profileImageUpload
 }
