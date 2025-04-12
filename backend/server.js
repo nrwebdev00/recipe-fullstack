@@ -14,8 +14,8 @@ import db from './Config/db.js';
 import errorHandler from './Middleware/errorHandler.js';
 
 // Routes Imports
-import userRoutes from './Routes/userRoutes.js';
-import userAdminRoutes from './Routes/userAdminRoutes.js';
+import userRoutes from './Routes/users/userRoutes.js';
+import userAdminRoutes from './Routes/users/userAdminRoutes.js';
 import uploaderRoutes from './Routes/uploaderRoutes.js';
 
 dotenv.config();

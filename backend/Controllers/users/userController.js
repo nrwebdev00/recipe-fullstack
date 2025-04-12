@@ -1,10 +1,10 @@
 import asyncHandler from 'express-async-handler';
 import crypto from 'crypto';
 
-import generateToken from '../Utlis/generateToken.js';
-import User from '../Models/userModel.js';
-import ErrorResponse from '../Utlis/errorResponse.js';
-import sendEmail from '../Utlis/sendEmail.js';
+import generateToken from '../../Utlis/generateToken.js';
+import User from '../../Models/userModel.js';
+import ErrorResponse from '../../Utlis/errorResponse.js';
+import sendEmail from '../../Utlis/sendEmail.js';
 
 
 // @desc Register a New User
