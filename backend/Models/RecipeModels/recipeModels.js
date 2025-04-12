@@ -9,7 +9,7 @@ const recipeSchema = mongoose.Schema(
             ref: 'User'
         },
         title: {
-            type:String,
+            type: String,
             required: true,
         },
         detailsAbout: {
@@ -17,7 +17,7 @@ const recipeSchema = mongoose.Schema(
             required: true
         },
         slug: {
-            type:String,
+            type: String,
             required: true,
             unique: true
         },
@@ -28,21 +28,21 @@ const recipeSchema = mongoose.Schema(
         },
         visible: {
             Type: String,
-            Enum: ['private','public','friendly'],
+            Enum: ['private', 'public', 'friendly'],
             required: true,
-            default:'private'
+            default: 'private'
         },
         cuisine: {
-            Type:String,
-            Enum:['American','Mexician'],//list of all cusine
+            Type: String,
+            Enum: ['American', 'Mexican'],//list of all cuisine
             required: true,
-            default:'American'
+            default: 'American'
         },
         meal: {
-            Type:String,
-            Enum:['Breakfast','Lunch','Brunch','Dinner','Apps'],
+            Type: String,
+            Enum: ['Breakfast', 'Lunch', 'Brunch', 'Dinner', 'Apps'],
             required: true,
-            Default:'Lunch'
+            Default: 'Lunch'
         },
         tags: {},
     },
