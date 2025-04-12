@@ -8,13 +8,42 @@ const recipeSchema = mongoose.Schema(
             type: Schema.Types.ObjectId,
             ref: 'User'
         },
-        title: {},
-        detailsAbout: {},
-        slug: {},
-        publish: {},
-        visible: {},
-        cuisine: {},
-        meal: {},
+        title: {
+            type:String,
+            required: true,
+        },
+        detailsAbout: {
+            type: String,
+            required: true
+        },
+        slug: {
+            type:String,
+            required: true,
+            unique: true
+        },
+        publish: {
+            type: Boolean,
+            required: true,
+            default: false
+        },
+        visible: {
+            Type: String,
+            Enum: ['private','public','friendly'],
+            required: true,
+            default:'private'
+        },
+        cuisine: {
+            Type:String,
+            Enum:['American','Mexician'],//list of all cusine
+            required: true,
+            default:'American'
+        },
+        meal: {
+            Type:String,
+            Enum:['Breakfast','Lunch','Brunch','Dinner','Apps'],
+            required: true,
+            Default:'Lunch'
+        },
         tags: {},
     },
     {
