@@ -5,7 +5,7 @@ import {
     deleteUser,
     createUser,
     updateUser
-} from '../../Controllers/users/userAdminController.js';
+} from '../../Controllers/usersControllers/userAdminController.js';
 import { admin, protect, staff } from '../../Middleware/authMiddleware.js';
 
 const router = express.Router();

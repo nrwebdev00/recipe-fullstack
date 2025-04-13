@@ -14,9 +14,10 @@ import db from './Config/db.js';
 import errorHandler from './Middleware/errorHandler.js';
 
 // Routes Imports
-import userRoutes from './Routes/users/userRoutes.js';
-import userAdminRoutes from './Routes/users/userAdminRoutes.js';
+import userRoutes from'./Routes/usersRoutes/userRoutes.js';
+import userAdminRoutes from './Routes/usersRoutes/userAdminRoutes.js';
 import uploaderRoutes from './Routes/uploaderRoutes.js';
+import recipeRoutes from './Routes/recipeRoutes/recipeRoutes.js';
 
 dotenv.config();
 db();
@@ -48,6 +49,7 @@ app.use(cookieParser());
 app.use('/api/users', userRoutes);
 app.use('/api/users-admin/', userAdminRoutes);
 app.use('/uploader', uploaderRoutes);
+app.use('/recipes', recipeRoutes);
 
 // Config Routes
 app.get('/', (req, res) => {

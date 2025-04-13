@@ -9,7 +9,7 @@ import {
     logoutUser,
     confirmEmailAddress,
     profileImageUpload
-} from '../../Controllers/users/userController.js';
+} from '../../Controllers/usersControllers/userController.js';
 import { admin, protect, staff } from '../../Middleware/authMiddleware.js';
 
 const router = express.Router();
