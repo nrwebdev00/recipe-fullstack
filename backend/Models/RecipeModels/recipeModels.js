@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 const recipeSchema = mongoose.Schema(
     {
@@ -74,6 +74,17 @@ const recipeSchema = mongoose.Schema(
             required: true,
             default:'0',
         },
+        recipeLikes: {
+            type: Number,
+            required: true,
+            default: 0,
+        },
+        recipeTags: [
+            {
+                type: Schema.Types.ObjectId,
+                ref:'RecipeTags'
+            }
+        ]
     },
     {
         timestamps: true

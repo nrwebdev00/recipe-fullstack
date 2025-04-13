@@ -2,17 +2,17 @@ import mongoose from 'mongoose';
 
 const recipeMovieSchema = mongoose.Schema(
     {
-        recipe:{
+        recipe: {
             type: Schema.Types.ObjectId,
-            ref:'Recipe',
+            ref: 'Recipe',
             required: true
         },
-        MovieUrl:{
+        MovieUrl: {
             type: String,
             required: true,
         },
-        desc:{
-            type:String,
+        desc: {
+            type: String,
         }
     },
     {

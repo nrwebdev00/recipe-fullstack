@@ -2,27 +2,27 @@ import mongoose, { Schema } from 'mongoose';
 
 const recipeIngredientSchema = mongoose.Schema(
     {
-        recipe:{
+        recipe: {
             type: Schema.Types.ObjectId,
             required: true,
-            ref:'Recipe'
+            ref: 'Recipe'
         },
-        ingredient:{
+        ingredient: {
             type: String,
             required: true
         },
-        measurementType:{
+        measurementType: {
             type: String,
-            enum:['t','T','fl oz','cup','pint','quart','gallon','pound','ounce','each','dozen'],
+            enum: ['t', 'T', 'fl oz', 'cup', 'pint', 'quart', 'gallon', 'pound', 'ounce', 'each', 'dozen'],
             required: true,
             default: 'each'
         },
-        measurementAmount:{
+        measurementAmount: {
             type: Number,
             required: true,
             default: 0
         },
-        ingredientIamgeURL:{
+        ingredientImageURL: {
             type: String,
         }
     },
@@ -32,4 +32,4 @@ const recipeIngredientSchema = mongoose.Schema(
 );
 
 const RecipeIngredient = mongoose.model('RecipeIngredient', recipeIngredientSchema);
-export default RecipeIngredient
+export default RecipeIngredient;

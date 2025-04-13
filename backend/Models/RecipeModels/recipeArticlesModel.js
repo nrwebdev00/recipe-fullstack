@@ -15,13 +15,13 @@ const recipeArticleSchema = mongoose.Schema(
         title:{
             type: String,
             required: true,
-            unquie: true,
+            unique: true,
             maxLength: [255, 'Please Limit Your Title to 255 characters']
         },
         slug:{
             type:String,
             required: true,
-            unquie: true,
+            unique: true,
         },
         text:{
             type:String,
