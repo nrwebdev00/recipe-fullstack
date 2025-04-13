@@ -1,24 +1,22 @@
 import mongoose, { Schema } from 'mongoose';
 
-const recipeImageSchema = mongoose.Schema(
+const recipeTagsSchema = mongoose.Schema(
     {
         recipe:{
             type: Schema.Types.ObjectId,
-            ref:'Recipe',
+            ref: 'recipe',
             required: true
         },
-        ImageUrl:{
+        tag:{
             type: String,
             required: true,
-        },
-        desc:{
-            type:String,
+            maxLength: [50, 'Tag Must be less than 50 Characters']
         }
     },
     {
         timestamps: true
     }
-);
+)
 
-const RecipeImage = mongoose.model('RecipeImage', recipeImageSchema);
-export default RecipeImage;
+const RecipeTags = mongoose.model('RecipeTags', recipeTagsSchema);
+export default RecipeTags;

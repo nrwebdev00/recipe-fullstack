@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
 
-import User from '../userModel.js';
-
 const recipeSchema = mongoose.Schema(
     {
         author: {
@@ -27,26 +25,60 @@ const recipeSchema = mongoose.Schema(
             default: false
         },
         visible: {
-            Type: String,
-            Enum: ['private', 'public', 'friendly'],
+            type: String,
+            enum: ['private', 'public', 'friendly'],
             required: true,
             default: 'private'
         },
         cuisine: {
-            Type: String,
-            Enum: ['American', 'Mexican'],//list of all cuisine
+            type: String,
+            enum: [  "Italian",
+                "Chinese",
+                "Japanese",
+                "Mexican",
+                "Thai",
+                "Indian",
+                "French",
+                "Spanish",
+                "Greek",
+                "American",
+                "Korean",
+                "Vietnamese",
+                "Mediterranean",
+                "Middle Eastern",
+                "Brazilian",
+                "Moroccan",
+                "Ethiopian",
+                "Peruvian",
+                "Turkish",
+                "German"
+            ],
             required: true,
             default: 'American'
         },
         meal: {
-            Type: String,
-            Enum: ['Breakfast', 'Lunch', 'Brunch', 'Dinner', 'Apps'],
+            type: String,
+            enum: ['Breakfast', 'Lunch', 'Brunch', 'Dinner', 'Apps'],
             required: true,
             Default: 'Lunch'
         },
-        tags: {},
+        cookingLevel:{
+            type: String,
+            enum:['1','2','3','4','5'],
+            required: true,
+            default: '1'
+        },
+        SpiceLevel:{
+            type: String,
+            enum:['0','1','2','3','4','5'],
+            required: true,
+            default:'0',
+        },
     },
     {
         timestamps: true
     }
 )
+
+const Recipe = mongoose.model('Recipe', recipeSchema)
+export default Recipe;
