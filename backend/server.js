@@ -14,7 +14,7 @@ import db from './Config/db.js';
 import errorHandler from './Middleware/errorHandler.js';
 
 // Routes Imports
-import userRoutes from'./Routes/usersRoutes/userRoutes.js';
+import userRoutes from './Routes/usersRoutes/userRoutes.js';
 import userAdminRoutes from './Routes/usersRoutes/userAdminRoutes.js';
 import uploaderRoutes from './Routes/uploaderRoutes.js';
 import recipeRoutes from './Routes/recipeRoutes/recipeRoutes.js';
@@ -48,8 +48,8 @@ app.use(cookieParser());
 // Mount Routes
 app.use('/api/users', userRoutes);
 app.use('/api/users-admin/', userAdminRoutes);
-app.use('/uploader', uploaderRoutes);
-app.use('/recipes', recipeRoutes);
+app.use('/api/uploader', uploaderRoutes);
+app.use('/api/recipes', recipeRoutes);
 
 // Config Routes
 app.get('/', (req, res) => {

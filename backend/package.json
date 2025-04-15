@@ -4,7 +4,9 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "seeder-d": "node seeder -d",
+    "seeder-i": "node seeder -i"
   },
   "keywords": [],
   "author": "",

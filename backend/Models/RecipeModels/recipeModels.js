@@ -4,7 +4,9 @@ const recipeSchema = mongoose.Schema(
     {
         author: {
             type: Schema.Types.ObjectId,
-            ref: 'User'
+            ref: 'User',
+            required: true,
+            unique: false
         },
         title: {
             type: String,
@@ -32,7 +34,7 @@ const recipeSchema = mongoose.Schema(
         },
         cuisine: {
             type: String,
-            enum: [  "Italian",
+            enum: ["Italian",
                 "Chinese",
                 "Japanese",
                 "Mexican",
@@ -42,6 +44,7 @@ const recipeSchema = mongoose.Schema(
                 "Spanish",
                 "Greek",
                 "American",
+                "Asian",
                 "Korean",
                 "Vietnamese",
                 "Mediterranean",
@@ -58,21 +61,21 @@ const recipeSchema = mongoose.Schema(
         },
         meal: {
             type: String,
-            enum: ['Breakfast', 'Lunch', 'Brunch', 'Dinner', 'Apps'],
+            enum: ['Breakfast', 'Lunch', 'Brunch', 'Dinner', 'Apps', 'Dessert'],
             required: true,
             Default: 'Lunch'
         },
-        cookingLevel:{
+        cookingLevel: {
             type: String,
-            enum:['1','2','3','4','5'],
+            enum: ['1', '2', '3', '4', '5'],
             required: true,
             default: '1'
         },
-        SpiceLevel:{
+        spiceLevel: {
             type: String,
-            enum:['0','1','2','3','4','5'],
+            enum: ['0', '1', '2', '3', '4', '5'],
             required: true,
-            default:'0',
+            default: '0',
         },
         recipeLikes: {
             type: Number,
@@ -82,7 +85,7 @@ const recipeSchema = mongoose.Schema(
         recipeTags: [
             {
                 type: Schema.Types.ObjectId,
-                ref:'RecipeTags'
+                ref: 'RecipeTags'
             }
         ]
     },

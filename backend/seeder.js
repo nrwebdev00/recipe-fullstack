@@ -5,45 +5,51 @@ import dotenv from 'dotenv';
 
 import db from './Config/db.js';
 
-dotenv.config({path: './seeder.env'});
+dotenv.config();
 
 // Load Models
 import User from './Models/userModel.js';
-import { dirname } from 'path';
+import Recipe from './Models/RecipeModels/recipeModels.js';
 
-
-// Connect To DB
 db();
 
 
 
 // Read JSON file
 const users = JSON.parse(
-    fs.readFileSync(`./Config/userSeeder.json`, 'utf-8')
+    fs.readFileSync(`./Config/SeederData/userSeeder.json`, 'utf-8')
+);
+
+const recipes = JSON.parse(
+    fs.readFileSync(`./Config/SeederData/recipeSeeder.json`, 'utf-8')
 );
 
 // Import to DB
-const importData = async ()=>{
-    try{
+const importData = async () => {
+    try {
         await User.create(users);
-    } catch(err){
+        await Recipe.create(recipes);
+        console.log(`Data Imported...`.green);
+        return;
+    } catch (err) {
         console.log(err)
     }
 }
 
 // Delete Data in Data
-const deleteData = async()=>{
-    try{
+const deleteData = async () => {
+    try {
         await User.deleteMany();
-
-        console.log(`Data Destoyed...`.red);
-    }catch(err){
+        await Recipe.deleteMany();
+        console.log(`Data Destroyed...`.red);
+        return;
+    } catch (err) {
         console.error(err)
     }
 }
 
-if (process.argv[2] === '-i'){
+if (process.argv[2] === '-i') {
     importData();
-} else if(process.argv[2] === '-d'){
+} else if (process.argv[2] === '-d') {
     deleteData();
 }

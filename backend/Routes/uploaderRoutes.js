@@ -26,7 +26,7 @@ const router = express.Router();
 
 // Upload Profile Image
 router.post('/profileImageUploader', protect, upload.single('file'), async (req, res, next) => {
-    let public_id = `RecipeApp/ProfileImg/${req.file.filename}`;
+    console.log(req.file)
     const result = await cloudinary.uploader.upload(`./uploads/${req.file.filename}`);
     const url = cloudinary.url(result.public_id, {
         transformation: [

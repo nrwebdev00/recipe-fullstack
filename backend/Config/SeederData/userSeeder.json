@@ -1,0 +1,52 @@
+[
+    {
+        "id": "5d7a514b5d2c12c7449be042",
+        "firstName": "Nathon",
+        "lastName": "Reed",
+        "userName": "nreed",
+        "email": "nreed@gmail.com",
+        "password": "password",
+        "isStaff": true,
+        "isAdmin": true
+    },
+    {
+        "id": "5d7a514b5d2c12c7449be0d0",
+        "firstName": "Amber",
+        "lastName": "Reed",
+        "userName": "areed@gmail.com",
+        "email": "areed@gmail.com",
+        "password": "password",
+        "isStaff": true,
+        "isAdmin": false
+    },
+    {
+        "id": "67fc46623394fbb4d1171c6c",
+        "firstName": "JP",
+        "lastName": "woods",
+        "userName": "jpwoods",
+        "email": "jpwoods@gmail.com",
+        "password": "password",
+        "isStaff": false,
+        "isAdmin": false
+    },
+    {
+        "id": "67fc46623394fbb4d1171c6d",
+        "firstName": "Bella",
+        "lastName": "M",
+        "userName": "Bella",
+        "email": "Bella@gmail.com",
+        "password": "password",
+        "isStaff": false,
+        "isAdmin": false
+    },
+    {
+        "id": "67fc46623394fbb4d1171c6e",
+        "firstName": "Natelie",
+        "lastName": "M",
+        "userName": "Natelie",
+        "email": "Natelie@gmail.com",
+        "password": "password",
+        "isStaff": false,
+        "isAdmin": false
+    }
+]
